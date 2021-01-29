@@ -4,6 +4,15 @@ const background = document.querySelector('.background');
 let isJumping = false;
 let isGameOver = false;
 let position = 0;
+let score = 0;
+
+function scoreDino() {
+  if (score != -1 && score != 0){
+    alert("Sua pontuação foi: " + score);
+  }else{
+    alert("Sua pontuação foi: 0");
+  }
+}
 
 function handleKeyUp(event) {
     if (event.keyCode === 32) {
@@ -20,10 +29,9 @@ function handleKeyUp(event) {
 
 function jump() {
     isJumping = true;
-  
     let upInterval = setInterval(() => {
       if (position >= 150) {
-        // Descendo
+        // desce
         clearInterval(upInterval);
   
         let downInterval = setInterval(() => {
@@ -47,7 +55,7 @@ function createCactus() {
     const cactus = document.createElement('div');
     let cactusPosition = 1000;
     let randomTime = Math.random() * 6000;
-  
+    score+=10;
     if (isGameOver) return;
     cactus.classList.add('cactus');
     background.appendChild(cactus);
@@ -63,6 +71,7 @@ function createCactus() {
         clearInterval(leftTimer);
         isGameOver = true;
         document.body.innerHTML = '<h1 class="game-over">Fim de jogo</h1>';
+        scoreDino();
       } else {
         cactusPosition -= 10;
         cactus.style.left = cactusPosition + 'px';
@@ -71,6 +80,5 @@ function createCactus() {
   
     setTimeout(createCactus, randomTime);
   }
-  
   createCactus();
   document.addEventListener('keyup', handleKeyUp);
